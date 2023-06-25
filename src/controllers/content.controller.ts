@@ -1,5 +1,10 @@
 import { Request, RequestHandler, Response } from "express";
-import { createItem, getItems, getItemsWithSlug } from "../services/content";
+import {
+  createItem,
+  getItems,
+  getItemsWithSlug,
+  searchItems,
+} from "../services/content";
 import { generate } from "randomstring";
 
 export const getArticles: RequestHandler = async (
@@ -13,6 +18,30 @@ export const getArticles: RequestHandler = async (
       skip: parseInt(skip) || 0,
       sortBy: sortBy || "created_at",
     });
+    return res.status(200).send(data);
+  } catch (error: any) {
+    console.log(error);
+    res.status(500).json({ error: "Error retrieving data from DB" });
+  }
+};
+
+export const searchArticles: RequestHandler = async (
+  req: Request,
+  res: Response
+) => {
+  
+  try {
+    const { limit, skip, sortBy, isFeatured } = req.query;
+    const data = await searchItems(
+      {
+        limit: parseInt(limit) || 10,
+        skip: parseInt(skip) || 0,
+        sortBy: sortBy || "created_at",
+      },
+      {
+        isFeatured: isFeatured,
+      }
+    );
     return res.status(200).send(data);
   } catch (error: any) {
     console.log(error);

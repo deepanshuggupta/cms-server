@@ -36,3 +36,26 @@ export const getItemsWithSlug = async (slug: string) => {
   }
   return data;
 };
+
+export const searchItems = async (
+  { limit, skip, sortBy }: GetItemProps,
+  searchCriteria: any
+) => {
+  const { isFeatured } = searchCriteria;
+  const data = await Content.find({
+    isFeatured,
+  })
+    .sort({
+      [sortBy]: -1,
+    })
+    .skip(skip)
+    .limit(limit);
+
+  const count = await Content.count();
+  const result = {
+    data,
+    total: count,
+  };
+
+  return result;
+};
