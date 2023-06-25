@@ -7,6 +7,8 @@ import {
 } from "../services/content";
 import { generate } from "randomstring";
 
+// test comment
+
 export const getArticles: RequestHandler = async (
   req: Request,
   res: Response
