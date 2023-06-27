@@ -7,14 +7,12 @@ import {
 } from "../services/content";
 import { generate } from "randomstring";
 
-// test comment
-
 export const getArticles: RequestHandler = async (
   req: Request,
   res: Response
 ) => {
   try {
-    const { limit, skip, sortBy } = req.query;
+    const { limit, skip, sortBy }: any = req.query;
     const data = await getItems({
       limit: parseInt(limit) || 10,
       skip: parseInt(skip) || 0,
@@ -31,9 +29,8 @@ export const searchArticles: RequestHandler = async (
   req: Request,
   res: Response
 ) => {
-  
   try {
-    const { limit, skip, sortBy, isFeatured } = req.query;
+    const { limit, skip, sortBy, isFeatured }: any = req.query;
     const data = await searchItems(
       {
         limit: parseInt(limit) || 10,
